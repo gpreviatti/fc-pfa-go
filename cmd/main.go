@@ -5,6 +5,7 @@ import (
 
 	"github.com/devfullcycle/pfa-go/internal/order/infra/database"
 	"github.com/devfullcycle/pfa-go/internal/order/usecase"
+	"github.com/google/uuid"
 )
 
 func main() {
@@ -16,7 +17,7 @@ func main() {
 	repository := database.NewOrderRepository(db)
 	uc := usecase.NewCalculateFinalPriceUseCase(repository)
 	input := usecase.OrderInputDTO{
-		ID:    "1234",
+		ID:    uuid.New().String(),
 		Price: 100,
 		Tax:   10,
 	}
