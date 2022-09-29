@@ -1,1 +1,5 @@
-.docker/mysql
+./infra/mysql/*
+./infra/grafana/*
+./infra/prometheus/*
+!./infra/prometheus/prometheus.yml
+./infra/rabbitmq

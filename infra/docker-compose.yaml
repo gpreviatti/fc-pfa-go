@@ -1,12 +1,13 @@
 version: '3'
 services:
   goapp:
-    build: .
+    build: ../src/.
     volumes:
-      - .:/app
+      - ../src/:/app
 
   mysql:
     image: mysql:5.7
+    hostname: mysql
     ports:
       - "3306:3306"
     platform: linux/amd64
@@ -15,7 +16,7 @@ services:
       - MYSQL_DATABASE=orders
       - MYSQL_PASSWORD=root
     volumes:
-      - ./.docker/mysql:/var/lib/mysql
+      - ./mysql:/var/lib/mysql
 
   rabbitmq:
     image: rabbitmq:3.8.16-management
@@ -29,6 +30,9 @@ services:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_DEFAULT_VHOST=/
+    volumes:
+      - ./rabbitmq/data/:/var/lib/rabbitmq/
+      - ./rabbitmq/log/:/var/log/rabbitmq
 
   prometheus:
     image: prom/prometheus
@@ -37,6 +41,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
+      - ./prometheus/:/etc/prometheus/
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -44,9 +49,13 @@ services:
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
 
-  grafanaservice:
-    image: grafana/grafana
+  grafana:
+    image: grafana/grafana:8.0.0
     container_name: grafana
     hostname: grafana
+    restart: always
     ports:
-      - "3000:3000"
+      - 3000:3000
+    volumes:
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+      - ./grafana/data/grafana:/var/lib/grafana/
