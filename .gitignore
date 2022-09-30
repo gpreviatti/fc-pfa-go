@@ -1,5 +1,7 @@
 ./infra/mysql/*
 ./infra/grafana/*
 ./infra/prometheus/*
+./infra/rabbitmq/*
+
 !./infra/prometheus/prometheus.yml
-./infra/rabbitmq
+!./infra/grafana/config.monitoring

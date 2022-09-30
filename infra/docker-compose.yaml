@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 services:
   goapp:
     build: ../src/.
@@ -41,7 +41,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus/:/etc/prometheus/
+      - ./prometheus/etc/prometheus/:/etc/prometheus/
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -50,12 +50,15 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
 
   grafana:
-    image: grafana/grafana:8.0.0
-    container_name: grafana
-    hostname: grafana
-    restart: always
+    image: grafana/grafana
+    user: "472"
+    depends_on:
+      - prometheus
     ports:
       - 3000:3000
     volumes:
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
-      - ./grafana/data/grafana:/var/lib/grafana/
+      - ./infra/grafana:/var/lib/grafana
+      - ./infra/grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./grafana/config.monitoring
+    restart: always
