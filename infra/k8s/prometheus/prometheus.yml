@@ -9,9 +9,3 @@ scrape_configs:
     # Override the global default and scrape targets from this job every 5 seconds.
     static_configs:
       - targets: ['rabbitmq:15692']
-
-  # - job_name: 'rabbitmq'
-  #   # Override the global default and scrape targets from this job every 5 seconds.
-  #   scrape_interval: 5s
-  #   static_configs:
-  #     - targets: ['rabbitmq:15692']
