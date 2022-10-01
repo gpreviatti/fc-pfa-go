@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rabbitmq-deploy
+  labels:
+    app: rabbitmq-deploy
   namespace: pfa-go
 spec:
   replicas: 1
@@ -14,24 +16,19 @@ spec:
         app: rabbitmq-deploy
     spec:
       containers:
-      - name: rabbitmq
-        image: rabbitmq:3.8.16-management
-        env:
-          - name: RABBITMQ_DEFAULT_USER
-            value: guest
-          - name: RABBITMQ_DEFAULT_PASS
-            value: guest
-          - name: RABBITMQ_DEFAULT_VHOST
-            value: /
-        ports:
-          - name: http
-            containerPort: 15672
-          - name: amqp
-            containerPort: 5672
-        resources:
-          requests:
-            cpu: 500m
-            memory: 500M
-          limits:
-            cpu: 1
-            memory: 1Gi
+        - name: rabbitmq-deploy
+          image: giov3nn10/rabbitmq-monitoring:latest
+          ports:
+            - containerPort: 15672
+              name: http
+            - containerPort: 5672
+              name: amqp
+            - containerPort: 15692
+              name: prometheus
+          volumeMounts:
+            - name: rabbitmq-volume
+              mountPath: /etc/rabbitmq/
+      volumes:
+        - name: rabbitmq-volume
+          configMap:
+            name: rabbitmq-configmap

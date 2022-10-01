@@ -6,17 +6,6 @@ metadata:
     name: prometheus-configmap
   namespace: pfa-go
 data:
-  prometheus.rules: |-
-    groups:
-    - name: devopscube demo alert
-      rules:
-      - alert: High Pod Memory
-        expr: sum(container_memory_usage_bytes) > 1
-        for: 1m
-        labels:
-          severity: slack
-        annotations:
-          summary: High Memory Usage
   prometheus.yml: |-
     global:
       scrape_interval: 5s # By default, scrape targets every 15 seconds.
@@ -28,4 +17,11 @@ data:
       - job_name: 'rabbitmq'
         # Override the global default and scrape targets from this job every 5 seconds.
         static_configs:
-          - targets: ['rabbitmq:15692']
+          - targets: ['rabbitmq-service.pfa-go.svc.cluster.local:15692']
+
+      # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+      - job_name: 'prometheus'
+        # metrics_path defaults to '/metrics'
+        # scheme defaults to 'http'.
+        static_configs:
+        - targets: ['localhost:9090']

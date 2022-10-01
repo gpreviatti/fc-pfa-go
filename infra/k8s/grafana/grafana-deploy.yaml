@@ -1,20 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: grafana
+  name: grafana-deploy
   namespace: pfa-go
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
-      app: grafana
+      app: grafana-deploy
   template:
     metadata:
+      name: grafana-deploy
       labels:
-        app: grafana
+        app: grafana-deploy
     spec:
       containers:
-      - name: goserver
-        image: wesleywillians/pfa-go:latest
+      - name: grafana-deploy
+        image: grafana/grafana
         ports:
-        - containerPort: 8080
+        - name: grafana
+          containerPort: 3000
+        volumeMounts:
+          - name: grafana-volume
+            mountPath: /etc/grafana/provisioning/datasources
+            readOnly: false
+      volumes:
+        - name: grafana-volume
+          configMap:
+            defaultMode: 420
+            name: grafana-configmap
+    

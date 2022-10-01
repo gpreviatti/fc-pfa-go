@@ -17,22 +17,14 @@ spec:
     spec:
       containers:
         - name: prometheus
-          image: prometheus
-          args:
-            - "--storage.tsdb.retention.time=12h"
-            - "--config.file=/etc/prometheus/prometheus.yml"
-            - "--storage.tsdb.path=/prometheus/"
+          image: prom/prometheus
           ports:
             - containerPort: 9090
-          resources:
-            requests:
-              cpu: 500m
-              memory: 500M
-            limits:
-              cpu: 1
-              memory: 1Gi
+          volumeMounts:
+            - name: prometheus-volume
+              mountPath: /etc/prometheus/
       volumes:
-        - name: prometheus
+        - name: prometheus-volume
           configMap:
             defaultMode: 420
             name: prometheus-configmap
