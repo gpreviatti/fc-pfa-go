@@ -1,20 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: producer
+  name: producer-deploy
   namespace: pfa-go
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
-      app: producer
+      app: producer-deploy
   template:
     metadata:
       labels:
-        app: producer
+        app: producer-deploy
     spec:
       containers:
       - name: goserver
-        image: wesleywillians/pfa-go:latest
-        ports:
-        - containerPort: 8080
+        image: giov3nn10/pfa-go:producer
