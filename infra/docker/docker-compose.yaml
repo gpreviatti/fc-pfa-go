@@ -1,7 +1,8 @@
 version: '3.7'
+name: pfa-go
 services:
   goapp:
-    build: ../src/.
+    build: ../../src/.
     volumes:
       - ../../src:/app
     ports:
