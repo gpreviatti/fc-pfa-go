@@ -6,7 +6,6 @@ on:
 
 jobs:
   producer:
-    needs: login-docker
     runs-on: ubuntu-latest
 
     steps:
@@ -28,7 +27,6 @@ jobs:
           tags: giov3nn10/pfa-go:producer
 
   consumer:
-    needs: login-docker
     runs-on: ubuntu-latest
 
     steps:
