@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+	var serverPort = "8181"
 	var mysqlUrl = "root:root@tcp(mysql:3306)/orders"
 	if os.Getenv("ENVIRONMENT") == "Production" {
 		mysqlUrl = "root:root@tcp(mysql-service.pfa-go.svc:3306)/orders"
@@ -27,6 +28,7 @@ func main() {
 		
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
+			println(err.Error())
 			return
 		}
 
@@ -37,5 +39,6 @@ func main() {
 		json.NewEncoder(w).Encode("Healthy")
 	})
 
-	go http.ListenAndServe(":8181", nil)
+	println("Server running on http://localhost:" + serverPort)
+	http.ListenAndServe(":" + serverPort, nil)
 }

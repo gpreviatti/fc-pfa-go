@@ -45,18 +45,18 @@ func main() {
 
 	conn, err := amqp.Dial(rabbitmqUrl)
 	if err != nil {
-		panic(err)
+		println(err.Error())
 	}
 	defer conn.Close()
 	
 	ch, _ := conn.Channel()
 	defer ch.Close()
 
-	for i := 0; i < 100000; i++ {
+	for i := 0; i < 100; i++ {
 		order := GenerateOrders()
 		err := Notify(ch, order)
 		if err != nil {
-			panic(err)
+			println(err.Error())
 		}
 	}
 }
