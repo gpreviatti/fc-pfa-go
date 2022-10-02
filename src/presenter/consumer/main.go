@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"os"
 	"sync"
 	"time"
 
@@ -15,8 +16,17 @@ import (
 
 func main() {
 	maxWorkers := 1
+
+	var rabbitmqUrl = "amqp://guest:guest@rabbitmq:5672"
+	var mysqlUrl = "root:root@tcp(mysql:3306)/orders"
+
+	if os.Getenv("ENVIRONMENT") == "Production" {
+		rabbitmqUrl = "amqp://guest:guest@rabbitmq-service.pfa-go.svc:5672/"
+		mysqlUrl = "root:root@tcp(mysql-service.pfa-go.svc:3306)/orders"
+	}
+
 	wg := sync.WaitGroup{}
-	db, err := sql.Open("mysql", "root:root@tcp(mysql:3306)/orders")
+	db, err := sql.Open("mysql", mysqlUrl)
 	if err != nil {
 		panic(err)
 	}
@@ -25,7 +35,7 @@ func main() {
 	repository := database.NewOrderRepository(db)
 	uc := usecase.NewCalculateFinalPriceUseCase(repository)
 
-	ch, err := rabbitmq.OpenChannel()
+	ch, err := rabbitmq.OpenChannel(rabbitmqUrl)
 	if err != nil {
 		panic(err)
 	}

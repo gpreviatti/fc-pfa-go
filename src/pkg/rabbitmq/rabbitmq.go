@@ -1,9 +1,11 @@
 package rabbitmq
 
-import amqp "github.com/rabbitmq/amqp091-go"
+import (
+	amqp "github.com/rabbitmq/amqp091-go"
+)
 
-func OpenChannel() (*amqp.Channel, error) {
-	conn, err := amqp.Dial("amqp://guest:guest@rabbitmq-service.pfa-go.svc:5672/")
+func OpenChannel(rabbitmqUrl string) (*amqp.Channel, error) {
+	conn, err := amqp.Dial(rabbitmqUrl)
 	if err != nil {
 		panic(err)
 	}

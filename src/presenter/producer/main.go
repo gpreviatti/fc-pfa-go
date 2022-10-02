@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"math/rand"
+	"os"
 
 	"github.com/google/uuid"
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -37,7 +38,12 @@ func Notify(ch *amqp.Channel, order Order) error {
 }
 
 func main() {
-	conn, err := amqp.Dial("amqp://guest:guest@rabbitmq-service.pfa-go.svc:5672/")
+	var rabbitmqUrl = "amqp://guest:guest@rabbitmq:5672"
+	if os.Getenv("ENVIRONMENT") == "Production" {
+		rabbitmqUrl = "amqp://guest:guest@rabbitmq-service.pfa-go.svc:5672/"
+	}
+
+	conn, err := amqp.Dial(rabbitmqUrl)
 	if err != nil {
 		panic(err)
 	}

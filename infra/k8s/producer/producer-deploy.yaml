@@ -16,3 +16,6 @@ spec:
       containers:
       - name: goserver
         image: giov3nn10/pfa-go:producer
+        env:
+          - name: ENVIRONMENT
+            value: Production

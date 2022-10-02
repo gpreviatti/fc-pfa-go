@@ -16,3 +16,6 @@ spec:
       containers:
       - name: conumser
         image: giov3nn10/pfa-go:consumer
+        env:
+          - name: ENVIRONMENT
+            value: Production

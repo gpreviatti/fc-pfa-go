@@ -4,14 +4,20 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
+	"os"
 
 	"github.com/devfullcycle/pfa-go/internal/order/infra/database"
 	"github.com/devfullcycle/pfa-go/internal/order/usecase"
 )
 
 func main() {
+	var mysqlUrl = "root:root@tcp(mysql:3306)/orders"
+	if os.Getenv("ENVIRONMENT") == "Production" {
+		mysqlUrl = "root:root@tcp(mysql-service.pfa-go.svc:3306)/orders"
+	}
+
 	http.HandleFunc("/total", func(w http.ResponseWriter, r *http.Request) {
-		db, _ := sql.Open("mysql", "root:root@tcp(mysql:3306)/orders")
+		db, _ := sql.Open("mysql", mysqlUrl)
 		defer db.Close()
 	
 		repository := database.NewOrderRepository(db)

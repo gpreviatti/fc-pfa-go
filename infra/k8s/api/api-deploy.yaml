@@ -16,5 +16,8 @@ spec:
       containers:
       - name: api-deploy
         image: giov3nn10/pfa-go:api
+        env:
+          - name: ENVIRONMENT
+            value: Production
         ports:
         - containerPort: 8080
