@@ -5,65 +5,58 @@ on:
     branches: [ main ]
 
 jobs:
-  Producer:
+  checkout:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
+  login-docker:
+    needs: checkout
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Docker Login
         uses: docker/login-action@v1.10.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PWD }}
 
+  producer:
+    needs: login-docker
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Docker Build and Push Docker registry
         uses: docker/build-push-action@v2.7.0
         with:
           context: ./src/
           file: ./src/Dockerfile.producer.prod
           push: true
-          tags: |
-            giov3nn10/pfa-go:producer
+          tags: giov3nn10/pfa-go:producer
 
-  Consumer:
+  consumer:
+    needs: login-docker
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Docker Login
-        uses: docker/login-action@v1.10.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_PWD }}
-
       - name: Docker Build and Push Docker registry
         uses: docker/build-push-action@v2.7.0
         with:
           context: ./src/
           file: ./src/Dockerfile.consumer.prod
           push: true
-          tags: |
-            giov3nn10/pfa-go:consumer
+          tags: giov3nn10/pfa-go:consumer
 
-  Api:
+  api:
+    needs: login-docker
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Docker Login
-        uses: docker/login-action@v1.10.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_PWD }}
-
       - name: Docker Build and Push Docker registry
         uses: docker/build-push-action@v2.7.0
         with:
           context: ./src/
           file: ./src/Dockerfile.api.prod
           push: true
-          tags: |
-            giov3nn10/pfa-go:api
+          tags: giov3nn10/pfa-go:api
