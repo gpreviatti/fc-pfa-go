@@ -21,11 +21,9 @@ func GenerateOrders() Order {
 }
 
 func Notify(ch *amqp.Channel, order Order) error {
-	body, err := json.Marshal(order)
-	if err != nil {
-		return err
-	}
-	err = ch.Publish(
+	body, _ := json.Marshal(order)
+
+	err := ch.Publish(
 		"amq.direct", // exchange,
 		"",
 		false,
@@ -44,11 +42,10 @@ func main() {
 		panic(err)
 	}
 	defer conn.Close()
-	ch, err := conn.Channel()
-	if err != nil {
-		panic(err)
-	}
+	
+	ch, _ := conn.Channel()
 	defer ch.Close()
+
 	for i := 0; i < 100000; i++ {
 		order := GenerateOrders()
 		err := Notify(ch, order)
