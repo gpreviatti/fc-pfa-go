@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	maxWorkers := 1
+	maxWorkers := 5
 
 	var rabbitmqUrl = "amqp://guest:guest@rabbitmq:5672"
 	var mysqlUrl = "root:root@tcp(mysql:3306)/orders"
@@ -63,10 +63,12 @@ func worker(deliveryMessage <-chan amqp.Delivery, uc *usecase.CalculateFinalPric
 			fmt.Println("Error unmarshalling message", err)
 		}
 		input.Tax = 10.0
+
 		_, err = uc.Execute(input)
 		if err != nil {
 			fmt.Println("Error unmarshalling message", err)
 		}
+
 		msg.Ack(false)
 		fmt.Println("Worker", workerId, "processed order", input.ID)
 		time.Sleep(1 * time.Second)

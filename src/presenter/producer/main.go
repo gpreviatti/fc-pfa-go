@@ -17,7 +17,7 @@ type Order struct {
 func GenerateOrders() Order {
 	return Order{
 		ID:    uuid.New().String(),
-		Price: rand.Float64() * 100,
+		Price: rand.Float64() * 1000,
 	}
 }
 

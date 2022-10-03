@@ -18,11 +18,11 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=orders
       - MYSQL_PASSWORD=root
-    # volumes:
-    #   - ./.docker/mysql:/var/lib/mysql
+    volumes:
+      - "../scripts/schema.sql:/scripts/schema.sql"
 
   rabbitmq:
-    image: rabbitmq:3.8.16-management
+    image: giov3nn10/rabbitmq-monitoring
     container_name: rabbitmq
     hostname: rabbitmq
     ports:
@@ -34,4 +34,5 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_DEFAULT_VHOST=/
     volumes:
-      - ./rabbitmq/data/:/var/lib/rabbitmq/
+      - ../configs/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+      - ../configs/rabbitmq-definitions.json:/etc/rabbitmq/definitions.json
