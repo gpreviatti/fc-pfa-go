@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/devfullcycle/pfa-go/internal/order/infra/database"
-	"github.com/devfullcycle/pfa-go/internal/order/usecase"
-	"github.com/devfullcycle/pfa-go/pkg/rabbitmq"
+	"github.com/gpreviatti/fc-pfa-go/order/infra/database"
+	"github.com/gpreviatti/fc-pfa-go/order/usecase"
+	"github.com/gpreviatti/fc-pfa-go/pkg/rabbitmq"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 

@@ -1,4 +1,4 @@
-package pkg
+package mongodb
 
 import (
 	"context"
@@ -28,6 +28,6 @@ func GetConnection(ctx context.Context) *mongo.Client {
 	return client
 }
 
-func GetDatabase(client mongo.Client, name string) *mongo.Database {
+func GetDatabase(client *mongo.Client, name string) *mongo.Database {
 	return client.Database(name)
 }

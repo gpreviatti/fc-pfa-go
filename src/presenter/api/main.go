@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/devfullcycle/pfa-go/internal/order/infra/database"
-	"github.com/devfullcycle/pfa-go/internal/order/usecase"
+	"github.com/gpreviatti/fc-pfa-go/order/infra/database"
+	"github.com/gpreviatti/fc-pfa-go/order/usecase"
 )
 
 func main() {

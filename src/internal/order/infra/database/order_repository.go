@@ -3,8 +3,8 @@ package database
 import (
 	"context"
 
-	"github.com/devfullcycle/pfa-go/internal/order/entity"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gpreviatti/fc-pfa-go/internal/order/entity"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -16,7 +16,7 @@ func NewOrderRepository(database *mongo.Database) *OrderRepository {
 	return &OrderRepository{database: database}
 }
 
-func (repository *OrderRepository, ctx context.Context) Save(order *entity.Order) error {
+func (repository *OrderRepository) Save(ctx context.Context, order *entity.Order) error {
 	_, err := repository.database.Collection("orders").InsertOne(ctx, order)
 
 	return err

@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"github.com/devfullcycle/pfa-go/internal/order/entity"
+	"github.com/gpreviatti/fc-pfa-go/internal/order/entity"
 )
 
 type GetTotalOutputDto struct {

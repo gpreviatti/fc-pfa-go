@@ -1,4 +1,4 @@
-module github.com/devfullcycle/pfa-go
+module github.com/gpreviatti/fc-pfa-go
 
 go 1.19
 
