@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"os"
 
 	"github.com/gpreviatti/fc-pfa-go/internal/order/infra/database"
 	"github.com/gpreviatti/fc-pfa-go/internal/order/usecase"
@@ -14,10 +13,6 @@ import (
 func main() {
 	var serverPort = "8181"
 	var ctx = context.TODO()
-	var mysqlUrl = "root:root@tcp(mysql:3306)/orders"
-	if os.Getenv("ENVIRONMENT") == "Production" {
-		mysqlUrl = "root:root@tcp(mysql-service.pfa-go.svc:3306)/orders"
-	}
 
 	http.HandleFunc("/total", func(w http.ResponseWriter, r *http.Request) {
 		client := mongodb.GetConnection(ctx)

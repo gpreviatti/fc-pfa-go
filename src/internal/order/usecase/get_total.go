@@ -5,7 +5,7 @@ import (
 )
 
 type GetTotalOutputDto struct {
-	Total int
+	Total int64
 }
 
 type GetTotalUseCase struct {

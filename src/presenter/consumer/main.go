@@ -1,7 +1,7 @@
 package main
 
 import (
-	"database/sql"
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -10,26 +10,20 @@ import (
 
 	"github.com/gpreviatti/fc-pfa-go/order/infra/database"
 	"github.com/gpreviatti/fc-pfa-go/order/usecase"
+	"github.com/gpreviatti/fc-pfa-go/pkg/mongodb"
 	"github.com/gpreviatti/fc-pfa-go/pkg/rabbitmq"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
+var ctx = context.TODO()
+
 func main() {
-	maxWorkers := 5
-
-	var mysqlUrl = "root:root@tcp(mysql:3306)/orders"
-
-	if os.Getenv("ENVIRONMENT") == "Production" {
-		mysqlUrl = "root:root@tcp(mysql-service.pfa-go.svc:3306)/orders"
-	}
-
-	wg := sync.WaitGroup{}
-	db, err := sql.Open("mysql", mysqlUrl)
-	if err != nil {
-		panic(err)
-	}
 	
-	defer db.Close()
+	client := mongodb.GetConnection(ctx)
+	db := mongodb.GetDatabase(client, "pfa_go")
+	wg := sync.WaitGroup{}
+	maxWorkers := 5
+	
 	repository := database.NewOrderRepository(db)
 	uc := usecase.NewCalculateFinalPriceUseCase(repository)
 
