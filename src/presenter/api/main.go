@@ -21,7 +21,7 @@ func main() {
 		repository := database.NewOrderRepository(db)
 		uc := usecase.NewGetTotalUseCase(repository)
 
-		output, err := uc.Execute()
+		output, err := uc.Execute(ctx)
 		
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)

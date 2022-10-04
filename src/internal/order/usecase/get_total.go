@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"context"
+
 	"github.com/gpreviatti/fc-pfa-go/internal/order/entity"
 )
 
@@ -16,8 +18,8 @@ func NewGetTotalUseCase(orderRepository entity.OrderRepositoryInterface) *GetTot
 	return &GetTotalUseCase{OrderRepository: orderRepository}
 }
 
-func (c *GetTotalUseCase) Execute() (*GetTotalOutputDto, error) {
-	total, err := c.OrderRepository.GetTotal()
+func (c *GetTotalUseCase) Execute(ctx context.Context) (*GetTotalOutputDto, error) {
+	total, err := c.OrderRepository.GetTotal(ctx)
 	if err != nil {
 		return nil, err
 	}

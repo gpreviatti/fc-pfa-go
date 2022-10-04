@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gpreviatti/fc-pfa-go/order/infra/database"
-	"github.com/gpreviatti/fc-pfa-go/order/usecase"
+	"github.com/gpreviatti/fc-pfa-go/internal/order/infra/database"
+	"github.com/gpreviatti/fc-pfa-go/internal/order/usecase"
 	"github.com/gpreviatti/fc-pfa-go/pkg/mongodb"
 	"github.com/gpreviatti/fc-pfa-go/pkg/rabbitmq"
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -56,7 +56,7 @@ func worker(deliveryMessage <-chan amqp.Delivery, uc *usecase.CalculateFinalPric
 		}
 		input.Tax = 10.0
 
-		_, err = uc.Execute(input)
+		_, err = uc.Execute(input, ctx)
 		if err != nil {
 			fmt.Println("Error unmarshalling message", err)
 		}
