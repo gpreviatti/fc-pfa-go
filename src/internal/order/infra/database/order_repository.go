@@ -5,6 +5,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gpreviatti/fc-pfa-go/internal/order/entity"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -17,16 +18,15 @@ func NewOrderRepository(database *mongo.Database) *OrderRepository {
 }
 
 func (repository *OrderRepository) Save(ctx context.Context, order *entity.Order) error {
-	_, err := repository.database.Collection("orders").InsertOne(ctx, order)
+	_, error := repository.database.Collection("orders").InsertOne(ctx, order)
 
-	return err
+	return error
 }
 
-// func (r *OrderRepository) GetTotal() (int, error) {
-// 	var total int
-// 	err := r.Db.QueryRow("SELECT COUNT(*) FROM orders").Scan(&total)
-// 	if err != nil {
-// 		return 0, err
-// 	}
-// 	return total, nil
-// }
+func (repository *OrderRepository) GetTotal(ctx context.Context) (int64, error) {
+	total, err := repository.database.Collection("orders").CountDocuments(ctx, bson.D{{}})
+	if err != nil {
+		return 0, err
+	}
+	return total, nil
+}

@@ -8,7 +8,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/gpreviatti/fc-pfa-go/internal/order/entity"
-	"github.com/gpreviatti/fc-pfa-go/internal/order/infra/database"
 	"github.com/gpreviatti/fc-pfa-go/pkg/mongodb"
 	"github.com/stretchr/testify/assert"
 )

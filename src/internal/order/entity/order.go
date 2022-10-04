@@ -1,10 +1,13 @@
 package entity
 
-import "errors"
+import (
+	"context"
+	"errors"
+)
 
 type OrderRepositoryInterface interface {
-	Save(order *Order) error
-	GetTotal() (int, error)
+	Save(ctx *context.Context, order *Order) error
+	GetTotal(ctx *context.Context) (int64, error)
 }
 
 type Order struct {
