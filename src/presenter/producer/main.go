@@ -38,12 +38,7 @@ func Notify(ch *amqp.Channel, order Order) error {
 }
 
 func main() {
-	var rabbitmqUrl = "amqp://guest:guest@rabbitmq:5672"
-	if os.Getenv("ENVIRONMENT") == "Production" {
-		rabbitmqUrl = "amqp://guest:guest@rabbitmq-service.pfa-go.svc:5672/"
-	}
-
-	conn, err := amqp.Dial(rabbitmqUrl)
+	conn, err := amqp.Dial(os.Getenv("RABBITMQ_CONNECTION_STRING"))
 	if err != nil {
 		println(err.Error())
 	}

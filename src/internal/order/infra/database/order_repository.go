@@ -1,37 +1,32 @@
 package database
 
 import (
-	"database/sql"
+	"context"
 
 	"github.com/devfullcycle/pfa-go/internal/order/entity"
 	_ "github.com/go-sql-driver/mysql"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type OrderRepository struct {
-	Db *sql.DB
+	database *mongo.Database
 }
 
-func NewOrderRepository(db *sql.DB) *OrderRepository {
-	return &OrderRepository{Db: db}
+func NewOrderRepository(database *mongo.Database) *OrderRepository {
+	return &OrderRepository{database: database}
 }
 
-func (r *OrderRepository) Save(order *entity.Order) error {
-	stmt, err := r.Db.Prepare("INSERT INTO orders (id, price, tax, final_price) VALUES (?, ?, ?, ?)")
-	if err != nil {
-		return err
-	}
-	_, err = stmt.Exec(order.ID, order.Price, order.Tax, order.FinalPrice)
-	if err != nil {
-		return err
-	}
-	return nil
+func (repository *OrderRepository, ctx context.Context) Save(order *entity.Order) error {
+	_, err := repository.database.Collection("orders").InsertOne(ctx, order)
+
+	return err
 }
 
-func (r *OrderRepository) GetTotal() (int, error) {
-	var total int
-	err := r.Db.QueryRow("SELECT COUNT(*) FROM orders").Scan(&total)
-	if err != nil {
-		return 0, err
-	}
-	return total, nil
-}
+// func (r *OrderRepository) GetTotal() (int, error) {
+// 	var total int
+// 	err := r.Db.QueryRow("SELECT COUNT(*) FROM orders").Scan(&total)
+// 	if err != nil {
+// 		return 0, err
+// 	}
+// 	return total, nil
+// }

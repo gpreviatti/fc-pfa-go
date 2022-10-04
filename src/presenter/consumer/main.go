@@ -17,11 +17,9 @@ import (
 func main() {
 	maxWorkers := 5
 
-	var rabbitmqUrl = "amqp://guest:guest@rabbitmq:5672"
 	var mysqlUrl = "root:root@tcp(mysql:3306)/orders"
 
 	if os.Getenv("ENVIRONMENT") == "Production" {
-		rabbitmqUrl = "amqp://guest:guest@rabbitmq-service.pfa-go.svc:5672/"
 		mysqlUrl = "root:root@tcp(mysql-service.pfa-go.svc:3306)/orders"
 	}
 
@@ -35,7 +33,7 @@ func main() {
 	repository := database.NewOrderRepository(db)
 	uc := usecase.NewCalculateFinalPriceUseCase(repository)
 
-	ch, err := rabbitmq.OpenChannel(rabbitmqUrl)
+	ch, err := rabbitmq.OpenChannel(os.Getenv("RABBITMQ_CONNECTION_STRING"))
 	if err != nil {
 		panic(err)
 	}

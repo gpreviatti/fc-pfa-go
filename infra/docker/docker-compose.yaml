@@ -3,36 +3,34 @@ name: pfa-go
 services:
   goapp:
     build: ../../src/.
+    environment:
+      - MONGO_CONNECTION_STRING=mongodb://root:root@mongo:27017
+      - RABBITMQ_CONNECTION_STRING=amqp://guest:guest@rabbitmq:5672
     volumes:
       - ../../src:/app
     ports:
       - "8181:8181"
 
-  mysql:
-    image: mysql:5.7
-    hostname: mysql
-    ports:
-      - "3306:3306"
-    platform: linux/amd64
+  mongo:
+    image: mongo
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=orders
-      - MYSQL_PASSWORD=root
-    volumes:
-      - "../scripts/schema.sql:/scripts/schema.sql"
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
 
   rabbitmq:
-    image: giov3nn10/rabbitmq-monitoring
+    image: rabbitmq:3-management
     container_name: rabbitmq
     hostname: rabbitmq
     ports:
-      - "5672:5672"
-      - "15672:15672"
-      - "15692:15692"
+      - "5672:5672" # service port
+      - "15672:15672" # ui port
+      - "15692:15692" # metrics port
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_DEFAULT_VHOST=/
     volumes:
-      - ../configs/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
-      - ../configs/rabbitmq-definitions.json:/etc/rabbitmq/definitions.json
+      - ../configs/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ../configs/definitions.json:/etc/rabbitmq/definitions.json:ro
