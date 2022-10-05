@@ -11,9 +11,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_Should_Insert_Order_In_Collection_With_Sucess(t *testing.T) {
+func Test_Should_Insert_Order_With_Sucess(t *testing.T) {
 	// Arrange
-	os.Setenv("MONGO_CONNECTION_STRING", "mongodb://root:root@localhost:27017")
+	os.Setenv("MONGO_CONNECTION_STRING", "mongodb://root:root@mongo:27017")
 	ctx := context.TODO()
 	client := mongodb.GetConnection(ctx)
 	db := mongodb.GetDatabase(client, "pfa_go")
@@ -26,4 +26,21 @@ func Test_Should_Insert_Order_In_Collection_With_Sucess(t *testing.T) {
 
 	// Assert
 	assert.NoError(t, result)
+}
+
+func Test_Should_Get_Total_With_Sucess(t *testing.T) {
+	// Arrange
+	os.Setenv("MONGO_CONNECTION_STRING", "mongodb://root:root@mongo:27017")
+	ctx := context.TODO()
+	client := mongodb.GetConnection(ctx)
+	db := mongodb.GetDatabase(client, "pfa_go")
+
+	repository := mongodb.NewOrderRepository(db)
+
+	// Act
+	result, error := repository.GetTotal(ctx)
+
+	// Assert
+	assert.NoError(t, error)
+	assert.NotEqual(t, 0, result)
 }

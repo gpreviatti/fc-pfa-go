@@ -1,6 +1,8 @@
 package rabbitmq
 
 import (
+	"context"
+
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
@@ -34,4 +36,20 @@ func Consume(ch *amqp.Channel, out chan amqp.Delivery) error {
 		out <- msg
 	}
 	return nil
+}
+
+func Notify(ch *amqp.Channel, body []byte) error {
+	var ctx = context.TODO()
+	err := ch.PublishWithContext(
+		ctx,
+		"orders_exchange", // exchange,
+		"",
+		false,
+		false,
+		amqp.Publishing{
+			ContentType: "application/json",
+			Body:        body,
+		},
+	)
+	return err
 }

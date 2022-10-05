@@ -1,10 +1,11 @@
-package consumer
+package main
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 	"sync"
 	"time"
 
@@ -21,7 +22,10 @@ func main() {
 	client := mongodb.GetConnection(ctx)
 	db := mongodb.GetDatabase(client, "pfa_go")
 	wg := sync.WaitGroup{}
-	maxWorkers := 5
+	maxWorkers, err := strconv.Atoi(os.Getenv("MAX_CONSUMER_WORKERS"))
+	if err != nil {
+		panic(err)
+	}
 	
 	repository := mongodb.NewOrderRepository(db)
 	uc := usecase.NewCalculateFinalPriceUseCase(repository)
@@ -57,7 +61,7 @@ func worker(deliveryMessage <-chan amqp.Delivery, uc *usecase.CalculateFinalPric
 
 		_, err = uc.Execute(input, ctx)
 		if err != nil {
-			fmt.Println("Error unmarshalling message", err)
+			fmt.Println("Error on execute use cse", err)
 		}
 
 		msg.Ack(false)

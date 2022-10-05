@@ -6,6 +6,8 @@ services:
     environment:
       - MONGO_CONNECTION_STRING=mongodb://root:root@mongo:27017
       - RABBITMQ_CONNECTION_STRING=amqp://guest:guest@rabbitmq:5672
+      - SERVER_PORT=8181
+      - MAX_CONSUMER_WORKERS=5
     volumes:
       - ../../src:/app
     ports:

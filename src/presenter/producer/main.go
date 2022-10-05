@@ -1,4 +1,4 @@
-package producer
+package main
 
 import (
 	"encoding/json"
@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/google/uuid"
+	"github.com/gpreviatti/fc-pfa-go/infra/rabbitmq"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
@@ -17,24 +18,8 @@ type Order struct {
 func GenerateOrders() Order {
 	return Order{
 		ID:    uuid.New().String(),
-		Price: rand.Float64() * 1000,
+		Price: rand.Float64() * 10000,
 	}
-}
-
-func Notify(ch *amqp.Channel, order Order) error {
-	body, _ := json.Marshal(order)
-
-	err := ch.Publish(
-		"amq.direct", // exchange,
-		"",
-		false,
-		false,
-		amqp.Publishing{
-			ContentType: "application/json",
-			Body:        body,
-		},
-	)
-	return err
 }
 
 func main() {
@@ -47,11 +32,16 @@ func main() {
 	ch, _ := conn.Channel()
 	defer ch.Close()
 
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 100000; i++ {
 		order := GenerateOrders()
-		err := Notify(ch, order)
+		body, err := json.Marshal(order)
 		if err != nil {
-			println(err.Error())
+			println("Error to marshal object", err.Error())
+		}
+
+		err = rabbitmq.Notify(ch, body)
+		if err != nil {
+			println("Error to publish message on exchange", err.Error())
 		}
 	}
 }
