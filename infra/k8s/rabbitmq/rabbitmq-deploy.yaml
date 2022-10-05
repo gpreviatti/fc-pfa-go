@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: rabbitmq-deploy
-          image: giov3nn10/rabbitmq-monitoring:latest
+          image: rabbitmq:3-management
           ports:
             - containerPort: 15672
               name: http

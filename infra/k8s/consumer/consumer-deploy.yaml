@@ -17,5 +17,9 @@ spec:
       - name: conumser
         image: giov3nn10/pfa-go:consumer
         env:
-          - name: ENVIRONMENT
-            value: Production
+          - name: MONGO_CONNECTION_STRING
+            value: mongodb://root:root@mongo-service.pfa-go.svc:27017
+          - name: RABBITMQ_CONNECTION_STRING
+            value: amqp://guest:guest@rabbitmq-service.pfa-go.svc:5672
+          - name: MAX_CONSUMER_WORKERS
+            value: 5

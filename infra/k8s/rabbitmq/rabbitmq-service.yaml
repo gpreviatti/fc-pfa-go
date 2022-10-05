@@ -11,10 +11,11 @@ spec:
     app: rabbitmq-deploy
   ports:
   - port: 15672
+    targetPort: 15672
     nodePort: 31672
     name: http
   - port: 5672
     name: amqp
   - port: 15692
-    nodePort: 30672
+    targetPort: 15692
     name: prometheus
