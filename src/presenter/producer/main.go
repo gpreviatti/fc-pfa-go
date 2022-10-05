@@ -39,7 +39,7 @@ func main() {
 			println("Error to marshal object", err.Error())
 		}
 
-		err = rabbitmq.Notify(ch, body)
+		err = rabbitmq.Publish(ch, body)
 		if err != nil {
 			println("Error to publish message on exchange", err.Error())
 		}

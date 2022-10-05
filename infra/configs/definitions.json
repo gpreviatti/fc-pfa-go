@@ -48,7 +48,7 @@
     ],
     "bindings": [
         {
-            "source": "orders_exchange",
+            "source": "amq.direct",
             "vhost": "/",
             "destination": "orders",
             "destination_type": "queue",

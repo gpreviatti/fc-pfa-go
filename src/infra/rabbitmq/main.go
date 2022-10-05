@@ -38,12 +38,12 @@ func Consume(ch *amqp.Channel, out chan amqp.Delivery) error {
 	return nil
 }
 
-func Notify(ch *amqp.Channel, body []byte) error {
+func Publish(ch *amqp.Channel, body []byte) error {
 	var ctx = context.TODO()
 	err := ch.PublishWithContext(
 		ctx,
-		"orders_exchange", // exchange,
-		"",
+		"amq.direct", // exchange,
+		"orders",
 		false,
 		false,
 		amqp.Publishing{
