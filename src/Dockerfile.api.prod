@@ -5,4 +5,5 @@ RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o server -ldflags="-w -s" pr
 
 FROM scratch
 COPY --from=builder /app/server /server
-CMD [ "/server" ]
+
+CMD [ "/presenter/api/", "main.go" ]
