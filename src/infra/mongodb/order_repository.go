@@ -1,10 +1,9 @@
-package database
+package mongodb
 
 import (
 	"context"
 
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/gpreviatti/fc-pfa-go/internal/order/entity"
+	"github.com/gpreviatti/fc-pfa-go/entity"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )

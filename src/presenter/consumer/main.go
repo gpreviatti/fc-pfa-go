@@ -1,4 +1,4 @@
-package main
+package consumer
 
 import (
 	"context"
@@ -8,10 +8,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gpreviatti/fc-pfa-go/internal/order/infra/database"
-	"github.com/gpreviatti/fc-pfa-go/internal/order/usecase"
-	"github.com/gpreviatti/fc-pfa-go/pkg/mongodb"
-	"github.com/gpreviatti/fc-pfa-go/pkg/rabbitmq"
+	"github.com/gpreviatti/fc-pfa-go/infra/mongodb"
+	"github.com/gpreviatti/fc-pfa-go/infra/rabbitmq"
+	"github.com/gpreviatti/fc-pfa-go/usecase"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
@@ -24,7 +23,7 @@ func main() {
 	wg := sync.WaitGroup{}
 	maxWorkers := 5
 	
-	repository := database.NewOrderRepository(db)
+	repository := mongodb.NewOrderRepository(db)
 	uc := usecase.NewCalculateFinalPriceUseCase(repository)
 
 	ch, err := rabbitmq.OpenChannel(os.Getenv("RABBITMQ_CONNECTION_STRING"))

@@ -1,29 +1,28 @@
-package entity_test
+package entity
 
 import (
 	"testing"
 
-	"github.com/gpreviatti/fc-pfa-go/internal/order/entity"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGivenAnEmptyId_WhenCreateANewOrder_ThenShouldReceiveAndError(t *testing.T) {
-	order := entity.Order{}
+	order := Order{}
 	assert.Error(t, order.IsValid(), "invalid id")
 }
 
 func TestGivenAnEmptyPrice_WhenCreateANewOrder_ThenShouldReceiveAndError(t *testing.T) {
-	order := entity.Order{ID: "123"}
+	order := Order{ID: "123"}
 	assert.Error(t, order.IsValid(), "invalid price")
 }
 
 func TestGivenAnEmptyTax_WhenCreateANewOrder_ThenShouldReceiveAndError(t *testing.T) {
-	order := entity.Order{ID: "123", Price: 10}
+	order := Order{ID: "123", Price: 10}
 	assert.Error(t, order.IsValid(), "invalid tax")
 }
 
 func TestGivenAValidParams_WhenCallNewOrder_ThenShould_ReceiveCreateOrderWithAllParams(t *testing.T) {
-	order, err := entity.NewOrder("123", 10, 2)
+	order, err := NewOrder("123", 10, 2)
 	assert.NoError(t, err)
 	assert.Equal(t, "123", order.ID)
 	assert.Equal(t, 10.0, order.Price)
@@ -31,7 +30,7 @@ func TestGivenAValidParams_WhenCallNewOrder_ThenShould_ReceiveCreateOrderWithAll
 }
 
 func TestGivenAValidParams_WhenCallCalculateFinalPrice_ThenShouldCalculateFinalPriceAndSetItOnFinalPriceProperty(t *testing.T) {
-	order, err := entity.NewOrder("123", 10, 2)
+	order, err := NewOrder("123", 10, 2)
 	assert.NoError(t, err)
 	err = order.CalculateFinalPrice()
 	assert.NoError(t, err)

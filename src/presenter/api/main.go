@@ -1,13 +1,12 @@
-package main
+package api
 
 import (
 	"context"
 	"encoding/json"
 	"net/http"
 
-	"github.com/gpreviatti/fc-pfa-go/internal/order/infra/database"
-	"github.com/gpreviatti/fc-pfa-go/internal/order/usecase"
-	"github.com/gpreviatti/fc-pfa-go/pkg/mongodb"
+	"github.com/gpreviatti/fc-pfa-go/infra/mongodb"
+	"github.com/gpreviatti/fc-pfa-go/usecase"
 )
 
 func main() {
@@ -18,7 +17,7 @@ func main() {
 		client := mongodb.GetConnection(ctx)
 		db := mongodb.GetDatabase(client, "pfa_go")
 	
-		repository := database.NewOrderRepository(db)
+		repository := mongodb.NewOrderRepository(db)
 		uc := usecase.NewGetTotalUseCase(repository)
 
 		output, err := uc.Execute(ctx)

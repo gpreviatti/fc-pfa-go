@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 
-	"github.com/gpreviatti/fc-pfa-go/internal/order/entity"
+	"github.com/gpreviatti/fc-pfa-go/entity"
 )
 
 type GetTotalOutputDto struct {
