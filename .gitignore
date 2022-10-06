@@ -1,6 +1,0 @@
-./infra/docker/rabbitmq/*
-infra\prometheus
-infra\rabbitmq
-
-!./infra/prometheus/prometheus.yml
-!./infra/grafana/config.monitoring
