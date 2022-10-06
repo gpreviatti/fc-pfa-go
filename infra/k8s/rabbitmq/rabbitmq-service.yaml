@@ -6,15 +6,16 @@ metadata:
     app: rabbitmq-deploy
   namespace: pfa-go
 spec:
-  type: NodePort
   selector:
     app: rabbitmq-deploy
+  type: NodePort
   ports:
   - port: 15672
     targetPort: 15672
     nodePort: 31672
     name: http
   - port: 5672
+    targetPort: 5672
     name: amqp
   - port: 15692
     targetPort: 15692

@@ -15,7 +15,7 @@ data:
                 "name": "prometheus",
                 "orgId": 1,
                 "type": "prometheus",
-                "url": "http://prometheus-service.pfa-go.svc:8080",
+                "url": "http://prometheus-service.pfa-go.svc.cluster.local:8080",
                 "version": 1
             }
         ]

@@ -4,7 +4,7 @@ metadata:
   name: api-deploy
   namespace: pfa-go
 spec:
-  replicas: 11
+  replicas: 1
   selector:
     matchLabels:
       app: api-deploy
@@ -16,10 +16,10 @@ spec:
       containers:
       - name: api-deploy
         image: giov3nn10/pfa-go:api
+        ports:
+          - containerPort: 8181
         env:
           - name: MONGO_CONNECTION_STRING
-            value: mongodb://root:root@mongo-service.pfa-go.svc:27017
+            value: mongodb://root:root@mongo-service.pfa-go.svc.cluster.local:27017
           - name: SERVER_PORT
-            value: 8181
-        ports:
-        - containerPort: 8181
+            value: '8181'

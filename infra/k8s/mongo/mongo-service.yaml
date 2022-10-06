@@ -8,5 +8,4 @@ spec:
   - port: 27017
     targetPort: 27017
   selector:
-    type: ClusterIP
     app: mongo-deploy

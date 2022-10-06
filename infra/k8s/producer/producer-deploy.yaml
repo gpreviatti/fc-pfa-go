@@ -18,4 +18,4 @@ spec:
         image: giov3nn10/pfa-go:producer
         env:
           - name: RABBITMQ_CONNECTION_STRING
-            value: amqp://guest:guest@rabbitmq-service.pfa-go.svc:5672
+            value: amqp://guest:guest@rabbitmq-service.pfa-go.svc.cluster.local:5672

@@ -4,6 +4,7 @@ metadata:
   name: mongo-deploy
   namespace: pfa-go
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: mongo-deploy
