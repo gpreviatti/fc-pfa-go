@@ -1,7 +1,7 @@
 FROM golang:1.19 as builder
 WORKDIR /app
 COPY . .
-RUN GOOS=linux CGO_ENABLED=0 go build -o server -ldflags="-w -s" presenter/api/main.go
+RUN go build -o server -ldflags="-w -s" presenter/api/main.go
 
 FROM scratch
 COPY --from=builder /app/server /server
