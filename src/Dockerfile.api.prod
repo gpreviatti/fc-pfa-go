@@ -6,4 +6,4 @@ RUN GOOS=linux CGO_ENABLED=0 go build -o server -ldflags="-w -s" presenter/api/m
 FROM scratch
 COPY --from=builder /app/server /server
 
-CMD [ "/server", "main.go" ]
+CMD [ "/server" ]

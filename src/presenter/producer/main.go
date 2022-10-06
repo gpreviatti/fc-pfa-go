@@ -32,7 +32,7 @@ func main() {
 	ch, _ := conn.Channel()
 	defer ch.Close()
 
-	for i := 0; i < 100000; i++ {
+	for i := 0; i < 1000; i++ {
 		order := GenerateOrders()
 		body, err := json.Marshal(order)
 		if err != nil {
