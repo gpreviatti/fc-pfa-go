@@ -25,7 +25,7 @@ func Test_Should_Insert_Order_With_Sucess(t *testing.T) {
 	result := repository.Save(ctx, order)
 
 	// Assert
-	assert.NoError(t, result)
+	assert.Nil(t, result)
 }
 
 func Test_Should_Get_Total_With_Sucess(t *testing.T) {
@@ -41,6 +41,7 @@ func Test_Should_Get_Total_With_Sucess(t *testing.T) {
 	result, error := repository.GetTotal(ctx)
 
 	// Assert
-	assert.NoError(t, error)
+	assert.Nil(t, error)
+	assert.NotNil(t, result)
 	assert.NotEqual(t, 0, result)
 }

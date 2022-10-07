@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-configmap
+  name: grafana-datasource-configmap
   namespace: pfa-go
 data:
   prometheus.yaml: |-

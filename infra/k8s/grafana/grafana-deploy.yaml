@@ -21,12 +21,19 @@ spec:
         - name: grafana
           containerPort: 3000
         volumeMounts:
-          - name: grafana-volume
+          - name: grafana-datasource-configmap
             mountPath: /etc/grafana/provisioning/datasources
             readOnly: false
+          - name: grafana-rabbitmq-configmap
+            mountPath: /etc/grafana/provisioning/dashboards
+            readOnly: false
       volumes:
-        - name: grafana-volume
+        - name: grafana-datasource-configmap
           configMap:
             defaultMode: 420
-            name: grafana-configmap
+            name: grafana-datasource-configmap
+        - name: grafana-rabbitmq-configmap
+          configMap:
+            defaultMode: 420
+            name: grafana-rabbitmq-configmap
     
