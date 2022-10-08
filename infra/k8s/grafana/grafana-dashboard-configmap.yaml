@@ -5093,7 +5093,7 @@ data:
       "version": 1
     }
   
-  kubernates-cluster-monitoring.json: |-
+
     {
       "__requires": [
         {
