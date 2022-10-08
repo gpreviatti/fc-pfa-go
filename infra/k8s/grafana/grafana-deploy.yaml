@@ -17,6 +17,15 @@ spec:
       containers:
       - name: grafana-deploy
         image: grafana/grafana
+        env:
+          - name: GF_INSTALL_PLUGINS
+            value: 'grafana-clock-panel,grafana-simple-json-datasource'
+          - name: GF_SECURITY_ADMIN_USER
+            value: admin
+          - name: GF_SECURITY_ADMIN_PASSWORD
+            value: admin
+          - name: GF_USERS_ALLOW_SIGN_UP
+            value: 'false'
         ports:
         - name: grafana
           containerPort: 3000
@@ -24,7 +33,7 @@ spec:
           - name: grafana-datasource-configmap
             mountPath: /etc/grafana/provisioning/datasources
             readOnly: false
-          - name: grafana-rabbitmq-configmap
+          - name: grafana-dashboard-configmap
             mountPath: /etc/grafana/provisioning/dashboards
             readOnly: false
       volumes:
@@ -32,8 +41,8 @@ spec:
           configMap:
             defaultMode: 420
             name: grafana-datasource-configmap
-        - name: grafana-rabbitmq-configmap
+        - name: grafana-dashboard-configmap
           configMap:
             defaultMode: 420
-            name: grafana-rabbitmq-configmap
+            name: grafana-dashboard-configmap
     
