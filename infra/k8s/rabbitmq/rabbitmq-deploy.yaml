@@ -18,6 +18,13 @@ spec:
       containers:
         - name: rabbitmq-deploy
           image: rabbitmq:3-management
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: guest
+            - name: RABBITMQ_DEFAULT_PASS
+              value: guest
+            - name: RABBITMQ_DEFAULT_VHOST
+              value: /
           ports:
             - containerPort: 15672
               name: http
