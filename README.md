@@ -1,7 +1,7 @@
 # FullCycle Program Acceleration Go
 
-Simple application that was designed in the full cycle golang acceleration week. 
-The objective of this program are learn and study simples concepts aboout golang, goroutines and pub-sub architecture.
+Simple application that was designed in the fullCycle golang acceleration week.
+The objective of this program are learn and study concepts about golang, goroutines and pub-sub architecture.
 
 ## Technologies
 
