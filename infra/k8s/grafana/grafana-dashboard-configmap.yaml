@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: grafana-dashboard-configmap
-  namespace: pfa-go
+  namespace: fc-pfa-go
 data:
   dashboard.yaml: |-
     apiVersion: 1

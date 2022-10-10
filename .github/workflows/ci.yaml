@@ -24,7 +24,7 @@ jobs:
           context: ./src/
           file: ./src/Dockerfile.producer.prod
           push: true
-          tags: giov3nn10/pfa-go:producer
+          tags: giov3nn10/fc-pfa-go:producer
 
   consumer:
     runs-on: ubuntu-latest
@@ -45,7 +45,7 @@ jobs:
           context: ./src/
           file: ./src/Dockerfile.consumer.prod
           push: true
-          tags: giov3nn10/pfa-go:consumer
+          tags: giov3nn10/fc-pfa-go:consumer
 
   api:
     runs-on: ubuntu-latest
@@ -66,4 +66,4 @@ jobs:
           context: ./src/
           file: ./src/Dockerfile.api.prod
           push: true
-          tags: giov3nn10/pfa-go:api
+          tags: giov3nn10/fc-pfa-go:api

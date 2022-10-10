@@ -4,7 +4,7 @@ metadata:
   name: rabbitmq-deploy
   labels:
     app: rabbitmq-deploy
-  namespace: pfa-go
+  namespace: fc-pfa-go
 spec:
   replicas: 1
   selector:

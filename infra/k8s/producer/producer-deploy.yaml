@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: producer-deploy
-  namespace: pfa-go
+  namespace: fc-pfa-go
 spec:
   replicas: 1
   selector:
@@ -15,11 +15,11 @@ spec:
     spec:
       containers:
       - name: goserver
-        image: giov3nn10/pfa-go:producer
+        image: giov3nn10/fc-pfa-go:producer
         resources:  
           limits:
             memory: 512Mi
             cpu: "1"
         env:
           - name: RABBITMQ_CONNECTION_STRING
-            value: amqp://guest:guest@rabbitmq-service.pfa-go.svc.cluster.local:5672
+            value: amqp://guest:guest@rabbitmq-service.fc-pfa-go.svc.cluster.local:5672

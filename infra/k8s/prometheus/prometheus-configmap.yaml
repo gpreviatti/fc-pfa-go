@@ -4,7 +4,7 @@ metadata:
   name: prometheus-configmap
   labels:
     name: prometheus-configmap
-  namespace: pfa-go
+  namespace: fc-pfa-go
 data:
   prometheus.yml: |-
     global:
@@ -17,7 +17,7 @@ data:
       - job_name: 'rabbitmq'
         # Override the global default and scrape targets from this job every 5 seconds.
         static_configs:
-          - targets: ['rabbitmq-service.pfa-go.svc.cluster.local:15692']
+          - targets: ['rabbitmq-service.fc-pfa-go.svc.cluster.local:15692']
 
       # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
       - job_name: 'prometheus'

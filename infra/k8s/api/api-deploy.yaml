@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api-deploy
-  namespace: pfa-go
+  namespace: fc-pfa-go
 spec:
   replicas: 1
   selector:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: api-deploy
-        image: giov3nn10/pfa-go:api
+        image: giov3nn10/fc-pfa-go:api
         resources:  
           limits:
             memory: 512Mi
@@ -24,6 +24,6 @@ spec:
           - containerPort: 8181
         env:
           - name: MONGO_CONNECTION_STRING
-            value: mongodb://root:root@mongo-service.pfa-go.svc.cluster.local:27017
+            value: mongodb://root:root@mongo-service.fc-pfa-go.svc.cluster.local:27017
           - name: SERVER_PORT
             value: '8181'

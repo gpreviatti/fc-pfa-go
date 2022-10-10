@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: grafana-datasource-configmap
-  namespace: pfa-go
+  namespace: fc-pfa-go
 data:
   prometheus.yaml: |-
     {
@@ -15,7 +15,7 @@ data:
                 "name": "prometheus",
                 "orgId": 1,
                 "type": "prometheus",
-                "url": "http://prometheus-service.pfa-go.svc.cluster.local:8080",
+                "url": "http://prometheus-service.fc-pfa-go.svc.cluster.local:8080",
                 "version": 1
             }
         ]

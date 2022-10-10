@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus-deploy
-  namespace: pfa-go
+  namespace: fc-pfa-go
   labels:
     app: prometheus-deploy
 spec:

@@ -4,7 +4,7 @@ metadata:
   name: rabbitmq-configmap
   labels:
     name: rabbitmq-configmap
-  namespace: pfa-go
+  namespace: fc-pfa-go
 data:
   enabled_plugins: |-
     [rabbitmq_management,rabbitmq_management_visualiser, rabbitmq_prometheus].
