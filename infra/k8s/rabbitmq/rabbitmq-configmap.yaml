@@ -8,8 +8,15 @@ metadata:
 data:
   enabled_plugins: |-
     [rabbitmq_management,rabbitmq_management_visualiser, rabbitmq_prometheus].
+  
   rabbitmq.conf: |-
     management.load_definitions = /etc/rabbitmq/definitions.json
+    loopback_users.guest = false
+    listeners.tcp.default = 5672
+    default_pass = guest
+    default_user = guest
+    default_vhost = /
+
   definitions.json: |-
     {
       "users": [

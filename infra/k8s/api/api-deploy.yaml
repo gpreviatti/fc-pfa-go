@@ -16,6 +16,10 @@ spec:
       containers:
       - name: api-deploy
         image: giov3nn10/pfa-go:api
+        resources:  
+          limits:
+            memory: 512Mi
+            cpu: "1"
         ports:
           - containerPort: 8181
         env:

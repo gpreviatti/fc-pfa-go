@@ -17,6 +17,10 @@ spec:
       containers:
       - name: grafana-deploy
         image: grafana/grafana
+        resources:  
+          limits:
+            memory: 512Mi
+            cpu: "1"
         env:
           - name: GF_INSTALL_PLUGINS
             value: 'grafana-clock-panel,grafana-simple-json-datasource'

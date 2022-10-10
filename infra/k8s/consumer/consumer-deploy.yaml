@@ -16,6 +16,10 @@ spec:
       containers:
       - name: conumser
         image: giov3nn10/pfa-go:consumer
+        resources:  
+          limits:
+            memory: 512Mi
+            cpu: "1"
         env:
           - name: MONGO_CONNECTION_STRING
             value: mongodb://root:root@mongo-service.pfa-go.svc.cluster.local:27017

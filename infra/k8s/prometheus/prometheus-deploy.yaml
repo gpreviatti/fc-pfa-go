@@ -18,6 +18,10 @@ spec:
       containers:
         - name: prometheus
           image: prom/prometheus
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
           ports:
             - containerPort: 9090
           volumeMounts:

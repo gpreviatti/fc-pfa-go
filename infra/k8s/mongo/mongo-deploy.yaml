@@ -17,6 +17,10 @@ spec:
     spec:
       containers:
       - image: mongo
+        resources:  
+          limits:
+            memory: 512Mi
+            cpu: "1"
         name: mysql
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
