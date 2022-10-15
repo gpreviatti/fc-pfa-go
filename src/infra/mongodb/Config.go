@@ -9,8 +9,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var collection *mongo.Collection
-
 func GetConnection(ctx context.Context) *mongo.Client {
 
 	clientOptions := options.Client().ApplyURI(os.Getenv("MONGO_CONNECTION_STRING"))

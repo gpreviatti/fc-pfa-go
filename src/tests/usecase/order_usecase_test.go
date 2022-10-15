@@ -2,8 +2,10 @@ package usecase_test
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
+	"github.com/google/uuid"
 	"github.com/gpreviatti/fc-pfa-go/application/dtos"
 	"github.com/gpreviatti/fc-pfa-go/application/usecase"
 	"github.com/gpreviatti/fc-pfa-go/domain/entity"
@@ -16,24 +18,24 @@ type OrderRepositoryMock struct {
 }
 
 func (m *OrderRepositoryMock) Save(ctx context.Context, order *entity.Order) error {
-	args := m.Called(ctx, order);
+	args := m.Called(ctx, order)
 	return args.Error(0)
 }
 
 func (m *OrderRepositoryMock) GetTotal(ctx context.Context) (int64, error) {
-	args := m.Called(ctx);
-	return 0, args.Error(1)
+	args := m.Called(ctx)
+	return int64(args.Int(0)), args.Error(1)
 }
 
 func Test_Should_Calculate_Final_Price_With_Success(t *testing.T) {
 	//Arrange
 	mockRepository := new(OrderRepositoryMock)
-	mockRepository.On("Save", mock.Anything).Return(nil)
+	mockRepository.On("Save", mock.Anything, mock.Anything).Return(nil)
 
 	ctx := context.TODO()
 
 	input := dtos.OrderInputDTO {
-		ID:    	"1",
+		ID:    	uuid.New().String(),
 		Price: 	10,
 		Tax: 	20,
 	}
@@ -41,8 +43,32 @@ func Test_Should_Calculate_Final_Price_With_Success(t *testing.T) {
 
 	// Act
 	result, err := uc.Execute(input, ctx)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 
 	// Assert
 	assert.Nil(t, err)
-	assert.NotEqual(t, "", result.ID, "result should not be nil")
+	assert.Equal(t, result.ID, input.ID)
+}
+
+
+func Test_Should_Get_Total_With_Success(t *testing.T) {
+	//Arrange
+	const total = 100
+	mockRepository := new(OrderRepositoryMock)
+	mockRepository.On("GetTotal", mock.Anything).Return(total, nil)
+
+	ctx := context.TODO()
+	uc := usecase.NewGetTotalUseCase(mockRepository)
+	
+	// Act
+	result, err := uc.Execute(ctx)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	// Assert
+	assert.Nil(t, err)
+	assert.Equal(t, int64(total), result.Total)
 }
