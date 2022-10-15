@@ -16,7 +16,7 @@ jobs:
         with:
           go-version: 1.19 
 
-      - name: Test Entities
+      - name: Testing
         run: cd ./src/tests/entity && go test -v
 
   usecase-tests:
@@ -30,7 +30,7 @@ jobs:
         with:
           go-version: 1.19 
 
-      - name: Test Entities
+      - name: Testing
         run: cd ./src/tests/usecase && go test -v
 
   producer:
