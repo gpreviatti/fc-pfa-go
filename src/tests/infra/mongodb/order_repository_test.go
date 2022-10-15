@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/gpreviatti/fc-pfa-go/entity"
+	"github.com/gpreviatti/fc-pfa-go/domain/entity"
 	"github.com/gpreviatti/fc-pfa-go/infra/mongodb"
 	"github.com/stretchr/testify/assert"
 )

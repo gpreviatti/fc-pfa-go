@@ -3,7 +3,7 @@ package mongodb
 import (
 	"context"
 
-	"github.com/gpreviatti/fc-pfa-go/entity"
+	"github.com/gpreviatti/fc-pfa-go/domain/entity"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )

@@ -3,44 +3,36 @@ package usecase
 import (
 	"context"
 
-	"github.com/gpreviatti/fc-pfa-go/entity"
+	"github.com/gpreviatti/fc-pfa-go/application/dtos"
+	"github.com/gpreviatti/fc-pfa-go/domain/entity"
+	"github.com/gpreviatti/fc-pfa-go/domain/interfaces"
 )
 
-type OrderInputDTO struct {
-	ID    string
-	Price float64
-	Tax   float64
-}
-
-type OrderOutputDTO struct {
-	ID         string
-	Price      float64
-	Tax        float64
-	FinalPrice float64
-}
-
 type CalculateFinalPriceUseCase struct {
-	OrderRepository entity.OrderRepositoryInterface
+	OrderRepository interfaces.OrderRepositoryInterface
 }
 
-func NewCalculateFinalPriceUseCase(orderRepository entity.OrderRepositoryInterface) *CalculateFinalPriceUseCase {
+func NewCalculateFinalPriceUseCase(orderRepository interfaces.OrderRepositoryInterface) *CalculateFinalPriceUseCase {
 	return &CalculateFinalPriceUseCase{OrderRepository: orderRepository}
 }
 
-func (c *CalculateFinalPriceUseCase) Execute(input OrderInputDTO, ctx context.Context) (*OrderOutputDTO, error) {
+func (c *CalculateFinalPriceUseCase) Execute(input dtos.OrderInputDTO, ctx context.Context) (*dtos.OrderOutputDTO, error) {
 	order, err := entity.NewOrder(input.ID, input.Price, input.Tax)
 	if err != nil {
 		return nil, err
 	}
+
 	err = order.CalculateFinalPrice()
 	if err != nil {
 		return nil, err
 	}
+
 	err = c.OrderRepository.Save(ctx, order)
 	if err != nil {
 		return nil, err
 	}
-	return &OrderOutputDTO{
+
+	return &dtos.OrderOutputDTO{
 		ID:         order.ID,
 		Price:      order.Price,
 		Tax:        order.Tax,

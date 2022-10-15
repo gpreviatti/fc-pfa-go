@@ -9,9 +9,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/gpreviatti/fc-pfa-go/application/dtos"
+	"github.com/gpreviatti/fc-pfa-go/application/usecase"
 	"github.com/gpreviatti/fc-pfa-go/infra/mongodb"
 	"github.com/gpreviatti/fc-pfa-go/infra/rabbitmq"
-	"github.com/gpreviatti/fc-pfa-go/usecase"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
@@ -52,7 +53,7 @@ func main() {
 
 func worker(deliveryMessage <-chan amqp.Delivery, uc *usecase.CalculateFinalPriceUseCase, workerId int) {
 	for msg := range deliveryMessage {
-		var input usecase.OrderInputDTO
+		var input dtos.OrderInputDTO
 		err := json.Unmarshal(msg.Body, &input)
 		if err != nil {
 			fmt.Println("Error unmarshalling message", err)

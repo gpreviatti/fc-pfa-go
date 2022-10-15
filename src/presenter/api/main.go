@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gpreviatti/fc-pfa-go/application/usecase"
 	"github.com/gpreviatti/fc-pfa-go/infra/mongodb"
-	"github.com/gpreviatti/fc-pfa-go/usecase"
 )
 
 func main() {

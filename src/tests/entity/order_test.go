@@ -3,7 +3,7 @@ package entity_test
 import (
 	"testing"
 
-	"github.com/gpreviatti/fc-pfa-go/entity"
+	"github.com/gpreviatti/fc-pfa-go/domain/entity"
 	"github.com/stretchr/testify/assert"
 )
 
